@@ -57,6 +57,7 @@ public class BlockCopier extends Item {
             return InteractionResult.SUCCESS;
         }
 
+        //ここ以下
         CompoundTag blockTag = tag.getCompound("clicked_block");
         String blockName = blockTag.getString("block");
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));

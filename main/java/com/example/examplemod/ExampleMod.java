@@ -62,7 +62,8 @@ public class ExampleMod {
     public static final Item ITEM_MY_SWORD =
             new ItemMySword().setRegistryName(MODID, "my_sword");
 
-    public static final Item BLOCK_COPIER = new BlockCopier().setRegistryName(MODID, "block_copier");
+    public static final Item BLOCK_COPIER =
+            new BlockCopier().setRegistryName(MODID, "block_copier");
 
     public ExampleMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
