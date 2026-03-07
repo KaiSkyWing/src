@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.BlockCopier.BlockCopier;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
@@ -61,6 +62,8 @@ public class ExampleMod {
     public static final Item ITEM_MY_SWORD =
             new ItemMySword().setRegistryName(MODID, "my_sword");
 
+    public static final Item BLOCK_COPIER = new BlockCopier().setRegistryName(MODID, "block_copier");
+
     public ExampleMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -92,6 +95,7 @@ public class ExampleMod {
                 ITEM_MAGIC_STICK,
                 ITEM_HI_POTION,
                 ITEM_MY_SWORD,
+                BLOCK_COPIER,
         };
 
         @SubscribeEvent
