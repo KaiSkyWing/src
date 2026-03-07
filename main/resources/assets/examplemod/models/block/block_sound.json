@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "examplemod:blocks/sound_side",
+    "down": "examplemod:blocks/sound/down",
+    "up": "examplemod:blocks/sound_up",
+    "east": "examplemod:blocks/sound_side",
+    "west": "examplemod:blocks/sound_side",
+    "north": "examplemod:blocks/sound_north",
+    "south": "examplemod:blocks/sound_side"
+  }
+}

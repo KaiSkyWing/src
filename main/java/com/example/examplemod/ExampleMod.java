@@ -5,6 +5,8 @@ import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
 import com.example.examplemod.mc_04_hipotion.ItemHiPotion;
 import com.example.examplemod.mc_05_mysword.ItemMySword;
+import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
+import com.example.examplemod.mc_07_soundblock.BlockSound;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
@@ -42,6 +44,12 @@ public class ExampleMod {
     public static final Block BLOCK_FORTUNE =
             new BlockFortune().setRegistryName(MODID, "block_fortune");
 
+    public static final Block BLOCK_RAINBOW =
+            new BlockRainbow().setRegistryName(MODID, "block_rainbow");
+
+    public static  final Block BLOCK_SOUND =
+            new BlockSound().setRegistryName(MODID, "block_sound");
+
     //Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
@@ -73,6 +81,8 @@ public class ExampleMod {
                 // ここにBlockを書いてね！
                 new RegisterBlockData(BLOCK_MYBLOCK),
                 new RegisterBlockData(BLOCK_FORTUNE),
+                new RegisterBlockData(BLOCK_RAINBOW),
+                new RegisterBlockData(BLOCK_SOUND),
         };
 
         private static final Item[] registerItems = {

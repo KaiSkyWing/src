@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "color=0": { "model": "examplemod:block/block_rainbow_0" },
+    "color=1": { "model": "examplemod:block/block_rainbow_1" },
+    "color=2": { "model": "examplemod:block/block_rainbow_2" },
+    "color=3": { "model": "examplemod:block/block_rainbow_3" },
+    "color=4": { "model": "examplemod:block/block_rainbow_4" },
+    "color=5": { "model": "examplemod:block/block_rainbow_5" },
+    "color=6": { "model": "examplemod:block/block_rainbow_6" }
+  }
+}
