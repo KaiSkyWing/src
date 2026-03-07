@@ -7,6 +7,7 @@ import com.example.examplemod.mc_04_hipotion.ItemHiPotion;
 import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
 import com.example.examplemod.mc_07_soundblock.BlockSound;
+import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
@@ -65,6 +66,7 @@ public class ExampleMod {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
     }
 
     private void setup(final FMLCommonSetupEvent event) {
