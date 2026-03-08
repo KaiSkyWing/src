@@ -12,6 +12,7 @@ import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
 import com.example.examplemod.mc_09_redstone.BlockSensor;
 import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
 import com.example.examplemod.mc_10_snowball_fight.ItemMySnowBall;
+import com.example.examplemod.mc_11_footprints_sand.BlockFootprintsSand;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -62,6 +63,9 @@ public class ExampleMod {
     public static  final Block BLOCK_SENSOR =
             new BlockSensor().setRegistryName(MODID, "block_sensor");
 
+    public static final Block BLOCK_FOOTPRINTS_SAND =
+            new BlockFootprintsSand().setRegistryName(MODID, "block_footprints_sand");
+
     //Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
@@ -110,6 +114,7 @@ public class ExampleMod {
                 new RegisterBlockData(BLOCK_RAINBOW),
                 new RegisterBlockData(BLOCK_SOUND),
                 new RegisterBlockData(BLOCK_SENSOR),
+                new RegisterBlockData(BLOCK_FOOTPRINTS_SAND),
         };
 
         private static final Item[] registerItems = {

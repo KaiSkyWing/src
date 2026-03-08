@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "color=0": { "model": "examplemod:block/block_footprints_sand_0" },
+    "color=1": { "model": "examplemod:block/block_footprints_sand_1" },
+    "color=2": { "model": "examplemod:block/block_footprints_sand_2" },
+    "color=3": { "model": "examplemod:block/block_footprints_sand_3" },
+    "color=4": { "model": "examplemod:block/block_footprints_sand_4" }
+  }
+}
