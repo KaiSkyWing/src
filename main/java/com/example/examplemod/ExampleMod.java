@@ -20,6 +20,10 @@ import com.example.examplemod.mc_13_explosive_arrow.ItemExplosiveArrow;
 import com.example.examplemod.mc_13_explosive_arrow.RenderExplosiveArrow;
 import com.example.examplemod.mc_14_bull_fighting.EntityBull;
 import com.example.examplemod.mc_14_bull_fighting.RenderBull;
+import com.example.examplemod.mc_15_tobisuke.EntityTobisuke;
+import com.example.examplemod.mc_15_tobisuke.ModelOriginalTobisuke;
+import com.example.examplemod.mc_15_tobisuke.ModelTobisuke;
+import com.example.examplemod.mc_15_tobisuke.RenderTobisuke;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -34,6 +38,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -96,7 +101,16 @@ public class ExampleMod {
                     .setTrackingRange(32)
                     .setShouldReceiveVelocityUpdates(true)
                     .build("bull");
-    
+
+    public static final EntityType<EntityTobisuke> ENTITY_TOBISUKE =
+            EntityType.Builder
+                    .of(EntityTobisuke::new, MobCategory.CREATURE)
+                    .sized(0.9f, 0.9f)
+                    .setTrackingRange(32)
+                    .setUpdateInterval(1)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("tobisuke");
+
     //Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
@@ -123,6 +137,13 @@ public class ExampleMod {
                     new Item.Properties().tab(CreativeModeTab.TAB_MISC)
             ).setRegistryName(MODID, "bull_spawn_egg");
 
+    public static final Item TOBISUKE_SPAWN_EGG =
+            new SpawnEggItem(ENTITY_TOBISUKE,
+                    0xFF0000,
+                    0x00FF00,
+                    new Item.Properties().tab(CreativeModeTab.TAB_MISC)
+            ).setRegistryName(MODID, "tobisuke_spawn_egg");
+
     public static final ResourceKey<Biome> MY_BIOME =
             ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(ExampleMod.MODID, "my_biome"));
 
@@ -144,6 +165,7 @@ public class ExampleMod {
         EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
         EntityRenderers.register(ENTITY_EXPLOSIVE_ARROW, RenderExplosiveArrow::new);
         EntityRenderers.register(ENTITY_BULL, RenderBull::new);
+        EntityRenderers.register(ENTITY_TOBISUKE, RenderTobisuke::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -167,6 +189,7 @@ public class ExampleMod {
                 ITEM_MY_SNOWBALL,
                 ITEM_EXPLOSIVE_ARROW,
                 BULL_SPAWN_EGG,
+                TOBISUKE_SPAWN_EGG,
         };
 
         @SubscribeEvent
@@ -183,6 +206,7 @@ public class ExampleMod {
         @SubscribeEvent
         public static void onAttributeCreation(final EntityAttributeCreationEvent event) {
             event.put(ENTITY_BULL, EntityBull.registerAttributes().build());
+            event.put(ENTITY_TOBISUKE, EntityTobisuke.registerAttributes().build());
         }
 
         @SubscribeEvent
@@ -193,6 +217,10 @@ public class ExampleMod {
                     .setRegistryName(MODID, "explosive_arrow"));
             event.getRegistry().register(ENTITY_BULL
                     .setRegistryName(MODID, "bull"));
+            event.getRegistry().register(ENTITY_TOBISUKE
+                    .setRegistryName(MODID, "tobisuke"));
+
+            ForgeHooksClient.registerLayerDefinition(RenderTobisuke.modelLayerLocation, ModelOriginalTobisuke::createLayer);
         }
 
         // ======================================================================================================
