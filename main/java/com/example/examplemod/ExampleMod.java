@@ -10,8 +10,14 @@ import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
 import com.example.examplemod.mc_07_soundblock.BlockSound;
 import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
 import com.example.examplemod.mc_09_redstone.BlockSensor;
+import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
+import com.example.examplemod.mc_10_snowball_fight.ItemMySnowBall;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -69,6 +75,16 @@ public class ExampleMod {
     public static final Item BLOCK_COPIER =
             new BlockCopier().setRegistryName(MODID, "block_copier");
 
+    public static final Item ITEM_MY_SNOWBALL =
+            new ItemMySnowBall().setRegistryName(MODID, "my_snowball");
+
+    //Entity
+    public static final  EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
+            EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("my_snowball");
+
     public ExampleMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -82,7 +98,7 @@ public class ExampleMod {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-
+        EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -102,6 +118,7 @@ public class ExampleMod {
                 ITEM_HI_POTION,
                 ITEM_MY_SWORD,
                 BLOCK_COPIER,
+                ITEM_MY_SNOWBALL,
         };
 
         @SubscribeEvent
@@ -116,7 +133,7 @@ public class ExampleMod {
 
         @SubscribeEvent
         public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-
+            event.getRegistry().register(ENTITY_MY_SNOWBALL.setRegistryName(MODID, "my_snowball"));
         }
 
         // ======================================================================================================
