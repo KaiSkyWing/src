@@ -15,6 +15,12 @@ import com.example.examplemod.mc_10_snowball_fight.ItemMySnowBall;
 import com.example.examplemod.mc_11_footprints_sand.BlockFootprintsSand;
 import com.example.examplemod.mc_12_biome.BiomeMyBiome;
 import com.example.examplemod.mc_12_biome.MyBiomeProvider;
+import com.example.examplemod.mc_13_explosive_arrow.EntityExplosiveArrow;
+import com.example.examplemod.mc_13_explosive_arrow.ItemExplosiveArrow;
+import com.example.examplemod.mc_13_explosive_arrow.RenderExplosiveArrow;
+import com.example.examplemod.mc_14_bull_fighting.EntityBull;
+import com.example.examplemod.mc_14_bull_fighting.RenderBull;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.Registry;
@@ -25,6 +31,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.BiomeDictionary;
@@ -70,7 +77,26 @@ public class ExampleMod {
 
     public static final Block BLOCK_FOOTPRINTS_SAND =
             new BlockFootprintsSand().setRegistryName(MODID, "block_footprints_sand");
+    //Entity
+    public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
+            EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("my_snowball");
 
+    public static final EntityType<EntityExplosiveArrow> ENTITY_EXPLOSIVE_ARROW =
+            EntityType.Builder.<EntityExplosiveArrow>of(EntityExplosiveArrow::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("explosive_arrow");
+
+    public static final EntityType<EntityBull> ENTITY_BULL =
+            EntityType.Builder.of(EntityBull::new, MobCategory.CREATURE)
+                    .sized(0.9f, 1.4f)
+                    .setTrackingRange(32)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("bull");
+    
     //Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
@@ -87,12 +113,15 @@ public class ExampleMod {
     public static final Item ITEM_MY_SNOWBALL =
             new ItemMySnowBall().setRegistryName(MODID, "my_snowball");
 
-    //Entity
-    public static final  EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
-            EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f)
-                    .setShouldReceiveVelocityUpdates(true)
-                    .build("my_snowball");
+    public static final Item ITEM_EXPLOSIVE_ARROW =
+            new ItemExplosiveArrow().setRegistryName(MODID, "explosive_arrow");
+
+    public static final Item BULL_SPAWN_EGG =
+            new SpawnEggItem(ENTITY_BULL,
+                    0x00FF00,
+                    0x0000FF,
+                    new Item.Properties().tab(CreativeModeTab.TAB_MISC)
+            ).setRegistryName(MODID, "bull_spawn_egg");
 
     public static final ResourceKey<Biome> MY_BIOME =
             ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(ExampleMod.MODID, "my_biome"));
@@ -113,6 +142,8 @@ public class ExampleMod {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
+        EntityRenderers.register(ENTITY_EXPLOSIVE_ARROW, RenderExplosiveArrow::new);
+        EntityRenderers.register(ENTITY_BULL, RenderBull::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -134,6 +165,8 @@ public class ExampleMod {
                 ITEM_MY_SWORD,
                 BLOCK_COPIER,
                 ITEM_MY_SNOWBALL,
+                ITEM_EXPLOSIVE_ARROW,
+                BULL_SPAWN_EGG,
         };
 
         @SubscribeEvent
@@ -149,12 +182,17 @@ public class ExampleMod {
 
         @SubscribeEvent
         public static void onAttributeCreation(final EntityAttributeCreationEvent event) {
-
+            event.put(ENTITY_BULL, EntityBull.registerAttributes().build());
         }
 
         @SubscribeEvent
         public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-            event.getRegistry().register(ENTITY_MY_SNOWBALL.setRegistryName(MODID, "my_snowball"));
+            event.getRegistry().register(ENTITY_MY_SNOWBALL
+                    .setRegistryName(MODID, "my_snowball"));
+            event.getRegistry().register(ENTITY_EXPLOSIVE_ARROW
+                    .setRegistryName(MODID, "explosive_arrow"));
+            event.getRegistry().register(ENTITY_BULL
+                    .setRegistryName(MODID, "bull"));
         }
 
         // ======================================================================================================
