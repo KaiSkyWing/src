@@ -24,6 +24,7 @@ import com.example.examplemod.mc_15_tobisuke.EntityTobisuke;
 import com.example.examplemod.mc_15_tobisuke.ModelOriginalTobisuke;
 import com.example.examplemod.mc_15_tobisuke.ModelTobisuke;
 import com.example.examplemod.mc_15_tobisuke.RenderTobisuke;
+import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -82,6 +83,10 @@ public class ExampleMod {
 
     public static final Block BLOCK_FOOTPRINTS_SAND =
             new BlockFootprintsSand().setRegistryName(MODID, "block_footprints_sand");
+
+    public static final Block BLOCK_BUILDING =
+            new BlockBuilding().setRegistryName(MODID, "block_building_block");
+
     //Entity
     public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
             EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
@@ -178,6 +183,7 @@ public class ExampleMod {
                 new RegisterBlockData(BLOCK_SOUND),
                 new RegisterBlockData(BLOCK_SENSOR),
                 new RegisterBlockData(BLOCK_FOOTPRINTS_SAND),
+                new RegisterBlockData(BLOCK_BUILDING),
         };
 
         private static final Item[] registerItems = {
