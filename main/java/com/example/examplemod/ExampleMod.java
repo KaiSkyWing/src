@@ -241,7 +241,7 @@ public class ExampleMod {
         public static void onAttributeCreation(final EntityAttributeCreationEvent event) {
             event.put(ENTITY_BULL, EntityBull.registerAttributes().build());
             event.put(ENTITY_TOBISUKE, EntityTobisuke.registerAttributes().build());
-            //❓event.put(ENTITY_CAR, EntityCar.registerAttributes().build());❓
+            event.put(ENTITY_CAR, EntityCar.registerAttributes().build());
         }
 
         @SubscribeEvent

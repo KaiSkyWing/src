@@ -6,10 +6,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -17,8 +20,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
-public class EntityCar extends Entity {
+public class EntityCar extends Animal {
 
     /**
      * Input State
@@ -43,7 +47,7 @@ public class EntityCar extends Entity {
     /**
      * Constructor
      */
-    public EntityCar(EntityType<?> type, Level level) {
+    public EntityCar(EntityType<? extends Animal> type, Level level) {
         super(type, level);
     }
 
@@ -51,7 +55,7 @@ public class EntityCar extends Entity {
      * Interaction
      */
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         System.out.println("interacted");
 
         //シフトの場合
@@ -78,14 +82,18 @@ public class EntityCar extends Entity {
         return this.getFirstPassenger();
     }
 
+    @Override
+    public boolean canBeControlledByRider() {
+        return true;
+    }
+
     /**
      * Tick
      */
     @Override
     public void tick() {
         super.tick();
-
-        if (this.getControllingPassenger() instanceof Player) {
+        if (this.isControlledByLocalInstance()) {
             if (this.level.isClientSide) {
 
                 if (this.isOnBoostBlock()) {
@@ -107,7 +115,6 @@ public class EntityCar extends Entity {
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
-            
         } else {
             this.setDeltaMovement(Vec3.ZERO);
         }
@@ -265,11 +272,27 @@ public class EntityCar extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {}
+    public @Nullable AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+        return null;
+    }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+    }
+
+    public static AttributeSupplier.Builder registerAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.3d)
+                .add(Attributes.MAX_HEALTH, 800.0d)
+                .add(Attributes.ATTACK_DAMAGE, 2.0d);
+    }
+/*
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {}
 
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {}
+
+ */
 }
