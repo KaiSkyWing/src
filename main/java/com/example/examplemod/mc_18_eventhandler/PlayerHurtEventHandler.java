@@ -19,7 +19,7 @@ public class PlayerHurtEventHandler {
                 MobEffect effect = MobEffects.HEAL;
                 int seconds = 5;
                 int level = 1;
-                player.addEffect(new MobEffectInstance(effect, seconds, level));
+                //player.addEffect(new MobEffectInstance(effect, seconds, level));
             }
         }
     }

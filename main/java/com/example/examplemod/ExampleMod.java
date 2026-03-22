@@ -1,10 +1,7 @@
 package com.example.examplemod;
 
 import com.example.examplemod.BlockCopier.BlockCopier;
-import com.example.examplemod.OriginalProject.EntityCar;
-import com.example.examplemod.OriginalProject.ModelCar;
-import com.example.examplemod.OriginalProject.PlayerInputOnCar;
-import com.example.examplemod.OriginalProject.RenderCar;
+import com.example.examplemod.OriginalProject.*;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
@@ -45,6 +42,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.BiomeDictionary;
@@ -100,6 +99,9 @@ public class ExampleMod {
 
     public static final Block BLOCK_COUNT2 =
             new BlockCount().setRegistryName(MODID, "block_count2");
+
+    public static final Block BLOCK_CHECKPOINT =
+            new BlockCheckpoint().setRegistryName(MODID, "block_checkpoint");
 
     //Entity
     public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
@@ -183,6 +185,7 @@ public class ExampleMod {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerInputOnCar());
+        MinecraftForge.EVENT_BUS.register(new CheckIfHolding());
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -212,6 +215,7 @@ public class ExampleMod {
                 new RegisterBlockData(BLOCK_BUILDING),
                 new RegisterBlockData(BLOCK_COUNT),
                 new RegisterBlockData(BLOCK_COUNT2),
+                new RegisterBlockData(BLOCK_CHECKPOINT),
         };
 
         private static final Item[] registerItems = {

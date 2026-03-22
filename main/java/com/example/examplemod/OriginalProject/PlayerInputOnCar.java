@@ -6,8 +6,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PlayerInputOnCar {
 
-    //EntityCarにも書いたがこれでいいのか？が正直いまいち分かり切ってない
-    //動くには動く
     //ここはAIがっつり使ってます
     @SubscribeEvent
     public void onInputKeyPressed(TickEvent.ClientTickEvent event) {
