@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -85,7 +86,6 @@ public class EntityCar extends Entity {
         super.tick();
 
         if (this.getControllingPassenger() instanceof Player) {
-            //ほんとは!this.level.isClientSideのが良い？input関連の理解が薄くて一旦いま動くのでこのまま。マルチだとまずいかも
             if (this.level.isClientSide) {
 
                 if (this.isOnBoostBlock()) {
@@ -99,17 +99,18 @@ public class EntityCar extends Entity {
                 }
 
                 this.controlCar();
+                this.level.sendPacketToServer(new ServerboundMovePlayerPacket.Pos(this.getDeltaMovement().x, this.getDeltaMovement().y, this.getDeltaMovement().z, this.onGround));
             }
+            //重力
+            if (!this.isNoGravity()) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0, -0.08D, 0));
+            }
+
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            
         } else {
             this.setDeltaMovement(Vec3.ZERO);
         }
-
-        //重力
-        if (!this.isNoGravity()) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.08D, 0));
-        }
-
-        this.move(MoverType.SELF, this.getDeltaMovement());
     }
 
     /**
