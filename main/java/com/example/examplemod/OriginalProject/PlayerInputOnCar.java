@@ -1,13 +1,10 @@
 package com.example.examplemod.OriginalProject;
 
-import com.example.examplemod.ExampleMod;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = ExampleMod.MODID, value = Dist.CLIENT)
 public class PlayerInputOnCar {
 
     @SubscribeEvent
