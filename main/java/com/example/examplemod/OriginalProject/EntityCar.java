@@ -51,15 +51,6 @@ public class EntityCar extends Entity {
         return this.getFirstPassenger();
     }
 
-    public boolean isControlledByLocalInstance() {
-        Entity entity = this.getControllingPassenger();
-        if (entity instanceof Player) {
-            return ((Player)entity).isLocalPlayer();
-        } else {
-            return !this.level.isClientSide;
-        }
-    }
-
     @Override
     public void tick() {
         super.tick();
@@ -81,12 +72,6 @@ public class EntityCar extends Entity {
         this.inputUp = pForwardInputDown;
         this.inputDown = pBackInputDown;
     }
-    /*
-    public void setCarState(boolean pLeft, boolean pRight) {
-        this.entityData.set(DATA_ID_CAR_LEFT, pLeft);
-        this.entityData.set(DATA_ID_CAR_RIGHT, pRight);
-    }
-     */
 
     @Override
     public double getPassengersRidingOffset() {

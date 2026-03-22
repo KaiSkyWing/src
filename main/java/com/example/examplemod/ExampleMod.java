@@ -3,6 +3,7 @@ package com.example.examplemod;
 import com.example.examplemod.BlockCopier.BlockCopier;
 import com.example.examplemod.OriginalProject.EntityCar;
 import com.example.examplemod.OriginalProject.ModelCar;
+import com.example.examplemod.OriginalProject.PlayerInputOnCar;
 import com.example.examplemod.OriginalProject.RenderCar;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
@@ -181,7 +182,7 @@ public class ExampleMod {
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
-        MinecraftForge.EVENT_BUS.register(new ClientEvents());
+        MinecraftForge.EVENT_BUS.register(new PlayerInputOnCar());
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -196,27 +197,6 @@ public class ExampleMod {
         EntityRenderers.register(ENTITY_BULL, RenderBull::new);
         EntityRenderers.register(ENTITY_TOBISUKE, RenderTobisuke::new);
         EntityRenderers.register(ENTITY_CAR, RenderCar::new);
-    }
-
-    @Mod.EventBusSubscriber(modid = ExampleMod.MODID, value = Dist.CLIENT)
-    public static class ClientEvents {
-
-        @SubscribeEvent
-        public static void onClientTick(TickEvent.ClientTickEvent event) {
-            Minecraft mc = Minecraft.getInstance();
-
-            if (mc.player == null) return;
-
-            if (mc.player.getVehicle() instanceof EntityCar car) {
-
-                boolean left  = mc.options.keyLeft.isDown();
-                boolean right = mc.options.keyRight.isDown();
-                boolean up    = mc.options.keyUp.isDown();
-                boolean down  = mc.options.keyDown.isDown();
-
-                car.setInput(left, right, up, down);
-            }
-        }
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
