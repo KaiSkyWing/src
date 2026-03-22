@@ -42,7 +42,7 @@ public class RenderCar extends EntityRenderer<EntityCar> {
         poseStack.scale(-3.0F, -3.0F, 3.0F);
         poseStack.translate(0.0D, -1.5D, 0.0D);
 
-        //BoatRendererは180.0F - entityYawだけど反転している分、ここは+に反転
+        //BoatRendererは180.0F - entityYawだけど反転している分、ここは+に
         poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F + entityYaw));
 
         VertexConsumer vc =

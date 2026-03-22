@@ -3,10 +3,11 @@ package com.example.examplemod.OriginalProject;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 public class PlayerInputOnCar {
 
+    //EntityCarにも書いたがこれでいいのか？が正直いまいち分かり切ってない
+    //動くには動く
     @SubscribeEvent
     public void onInputKeyPressed(TickEvent.ClientTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
