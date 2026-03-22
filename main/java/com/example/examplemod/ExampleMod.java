@@ -29,6 +29,7 @@ import com.example.examplemod.mc_15_tobisuke.ModelTobisuke;
 import com.example.examplemod.mc_15_tobisuke.RenderTobisuke;
 import com.example.examplemod.mc_16_buildingblock.BlockBuilding;
 import com.example.examplemod.mc_tips_countblock.BlockCount;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -43,11 +44,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -132,7 +135,7 @@ public class ExampleMod {
     public static final EntityType<EntityCar> ENTITY_CAR =
             EntityType.Builder
                     .of(EntityCar::new, MobCategory.MISC)
-                    .sized(0.6F, 0.7F)
+                    .sized(1.8F, 2.1F)
                     .setShouldReceiveVelocityUpdates(true)
                     .build("car");
 
@@ -178,6 +181,7 @@ public class ExampleMod {
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ClientEvents());
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -192,6 +196,27 @@ public class ExampleMod {
         EntityRenderers.register(ENTITY_BULL, RenderBull::new);
         EntityRenderers.register(ENTITY_TOBISUKE, RenderTobisuke::new);
         EntityRenderers.register(ENTITY_CAR, RenderCar::new);
+    }
+
+    @Mod.EventBusSubscriber(modid = ExampleMod.MODID, value = Dist.CLIENT)
+    public static class ClientEvents {
+
+        @SubscribeEvent
+        public static void onClientTick(TickEvent.ClientTickEvent event) {
+            Minecraft mc = Minecraft.getInstance();
+
+            if (mc.player == null) return;
+
+            if (mc.player.getVehicle() instanceof EntityCar car) {
+
+                boolean left  = mc.options.keyLeft.isDown();
+                boolean right = mc.options.keyRight.isDown();
+                boolean up    = mc.options.keyUp.isDown();
+                boolean down  = mc.options.keyDown.isDown();
+
+                car.setInput(left, right, up, down);
+            }
+        }
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

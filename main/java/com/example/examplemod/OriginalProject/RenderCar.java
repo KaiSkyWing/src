@@ -31,16 +31,19 @@ public class RenderCar extends EntityRenderer<EntityCar> {
         this.model = new ModelCar<>(context.bakeLayer(modelLayerLocation));
     }
 
+
     @Override
     public void render(EntityCar entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 
         poseStack.pushPose();
 
-        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        //なんか初期で逆さまに、位置がずれて表示されるから修正
+        poseStack.scale(-3.0F, -3.0F, 3.0F);
         poseStack.translate(0.0D, -1.5D, 0.0D);
 
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
+        //BoatRendererは180.0F - entityYawだけど反転している分、ここは+に反転
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F + entityYaw));
 
         VertexConsumer vc =
                 buffer.getBuffer(RenderType.entityCutout(getTextureLocation(entity)));
