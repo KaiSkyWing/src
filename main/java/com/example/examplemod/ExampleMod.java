@@ -1,6 +1,9 @@
 package com.example.examplemod;
 
 import com.example.examplemod.BlockCopier.BlockCopier;
+import com.example.examplemod.OriginalProject.EntityCar;
+import com.example.examplemod.OriginalProject.ModelCar;
+import com.example.examplemod.OriginalProject.RenderCar;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_02_fortuneblock.BlockFortune;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
@@ -96,19 +99,22 @@ public class ExampleMod {
 
     //Entity
     public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
-            EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
+            EntityType.Builder
+                    .<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f)
                     .setShouldReceiveVelocityUpdates(true)
                     .build("my_snowball");
 
     public static final EntityType<EntityExplosiveArrow> ENTITY_EXPLOSIVE_ARROW =
-            EntityType.Builder.<EntityExplosiveArrow>of(EntityExplosiveArrow::new, MobCategory.MISC)
+            EntityType.Builder
+                    .<EntityExplosiveArrow>of(EntityExplosiveArrow::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f)
                     .setShouldReceiveVelocityUpdates(true)
                     .build("explosive_arrow");
 
     public static final EntityType<EntityBull> ENTITY_BULL =
-            EntityType.Builder.of(EntityBull::new, MobCategory.CREATURE)
+            EntityType.Builder
+                    .of(EntityBull::new, MobCategory.CREATURE)
                     .sized(0.9f, 1.4f)
                     .setTrackingRange(32)
                     .setShouldReceiveVelocityUpdates(true)
@@ -122,6 +128,13 @@ public class ExampleMod {
                     .setUpdateInterval(1)
                     .setShouldReceiveVelocityUpdates(true)
                     .build("tobisuke");
+
+    public static final EntityType<EntityCar> ENTITY_CAR =
+            EntityType.Builder
+                    .of(EntityCar::new, MobCategory.MISC)
+                    .sized(0.6F, 0.7F)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("car");
 
     //Item
     public static final Item ITEM_MAGIC_STICK =
@@ -178,6 +191,7 @@ public class ExampleMod {
         EntityRenderers.register(ENTITY_EXPLOSIVE_ARROW, RenderExplosiveArrow::new);
         EntityRenderers.register(ENTITY_BULL, RenderBull::new);
         EntityRenderers.register(ENTITY_TOBISUKE, RenderTobisuke::new);
+        EntityRenderers.register(ENTITY_CAR, RenderCar::new);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -222,6 +236,7 @@ public class ExampleMod {
         public static void onAttributeCreation(final EntityAttributeCreationEvent event) {
             event.put(ENTITY_BULL, EntityBull.registerAttributes().build());
             event.put(ENTITY_TOBISUKE, EntityTobisuke.registerAttributes().build());
+            //❓event.put(ENTITY_CAR, EntityCar.registerAttributes().build());❓
         }
 
         @SubscribeEvent
@@ -234,8 +249,10 @@ public class ExampleMod {
                     .setRegistryName(MODID, "bull"));
             event.getRegistry().register(ENTITY_TOBISUKE
                     .setRegistryName(MODID, "tobisuke"));
-
             ForgeHooksClient.registerLayerDefinition(RenderTobisuke.modelLayerLocation, ModelOriginalTobisuke::createLayer);
+
+            event.getRegistry().register(ENTITY_CAR.setRegistryName(MODID, "car"));
+            ForgeHooksClient.registerLayerDefinition(RenderCar.modelLayerLocation, ModelCar::createLayer);
         }
 
         // ======================================================================================================
