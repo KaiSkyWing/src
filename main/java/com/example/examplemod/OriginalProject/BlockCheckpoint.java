@@ -1,6 +1,7 @@
 package com.example.examplemod.OriginalProject;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -27,7 +28,17 @@ public class BlockCheckpoint extends Block {
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
         if (!isInside) {
-            pEntity.hurt(DamageSource.IN_FIRE, 5f);
+            if (pLevel.isClientSide) { // ← IMPORTANT
+                for (int i = 0; i < 20; i++) {
+                    pLevel.addParticle(
+                            ParticleTypes.TOTEM_OF_UNDYING,
+                            pPos.getX() + 0.5,
+                            pPos.getY() + 1,
+                            pPos.getZ() + 0.5,
+                            0, 0, 0
+                    );
+                }
+            }
             System.out.println("interacted");
             isInside = true;
         }
