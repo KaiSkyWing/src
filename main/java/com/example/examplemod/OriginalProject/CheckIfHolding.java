@@ -8,6 +8,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CheckIfHolding {
 
+    //アイテムを持っているときだけブロックを表示させようとした
+    //現時点では何も対応させていない
     @SubscribeEvent
     public void checkHolding(RenderLevelLastEvent event) {
         Minecraft mc = Minecraft.getInstance();
