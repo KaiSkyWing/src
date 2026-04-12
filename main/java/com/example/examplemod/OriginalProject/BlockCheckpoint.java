@@ -28,7 +28,7 @@ public class BlockCheckpoint extends Block {
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
         if (!isInside) {
-            if (pLevel.isClientSide) { // ← IMPORTANT
+            if (pLevel.isClientSide) {
                 for (int i = 0; i < 20; i++) {
                     pLevel.addParticle(
                             ParticleTypes.TOTEM_OF_UNDYING,
