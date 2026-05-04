@@ -37,6 +37,9 @@ public class BlockCheckpoint extends Block {
 //        return RenderShape.INVISIBLE;
 //    }
 
+    /**
+     * なんか攻撃とかの当たり判定のために必要っぽい？
+     */
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Block.box(0, 0, 0, 16, 16, 16);
@@ -47,6 +50,9 @@ public class BlockCheckpoint extends Block {
         builder.add(ACTIVATED);
     }
 
+    /**
+     * 右クリックで Activated を false に
+     */
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos,
                                  Player player, InteractionHand hand, BlockHitResult hit) {
@@ -58,6 +64,9 @@ public class BlockCheckpoint extends Block {
         return InteractionResult.SUCCESS;
     }
 
+    /**
+     * 中に入って Activated を true に
+     */
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!state.getValue(ACTIVATED)) {
@@ -81,6 +90,9 @@ public class BlockCheckpoint extends Block {
         super.entityInside(state, level, pos, entity);
     }
 
+    /**
+     * チェックポイントブロックを所持時のみモデルを描画
+     */
     @Override
     public RenderShape getRenderShape(BlockState state) {
         if (net.minecraft.client.Minecraft.getInstance().player != null) {
@@ -94,10 +106,4 @@ public class BlockCheckpoint extends Block {
 
         return RenderShape.INVISIBLE;
     }
-
-
-
-
-
-
 }
