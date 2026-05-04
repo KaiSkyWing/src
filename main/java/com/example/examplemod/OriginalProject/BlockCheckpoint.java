@@ -1,6 +1,7 @@
 package com.example.examplemod.OriginalProject;
 
 import com.example.examplemod.ExampleMod;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
@@ -95,9 +96,9 @@ public class BlockCheckpoint extends Block {
      */
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        if (net.minecraft.client.Minecraft.getInstance().player != null) {
+        if (Minecraft.getInstance().player != null) {
 
-            var player = net.minecraft.client.Minecraft.getInstance().player;
+            var player = Minecraft.getInstance().player;
 
             if (player.getMainHandItem().getItem() == ExampleMod.BLOCK_CHECKPOINT.asItem()) {
                 return RenderShape.MODEL;
