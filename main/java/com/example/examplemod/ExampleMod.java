@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.AiMoc.AiMocItem;
 import com.example.examplemod.BlockCopier.BlockCopier;
 import com.example.examplemod.OriginalProject.*;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
@@ -143,6 +144,9 @@ public class ExampleMod {
                     .build("car");
 
     //Item
+    public static final Item AI_MOC_ITEM =
+            new AiMocItem().setRegistryName(MODID, "aimoc_item");
+
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID, "magic_stick");
 
@@ -220,6 +224,7 @@ public class ExampleMod {
 
         private static final Item[] registerItems = {
                 // ここにItemを書いてね！
+                AI_MOC_ITEM,
                 ITEM_MAGIC_STICK,
                 ITEM_HI_POTION,
                 ITEM_MY_SWORD,
